@@ -1,4 +1,4 @@
-# Javascript_Design_Patterns
+# Javascript Design Patterns
 Introduction to Javascript Design Patterns
 
 Constructor Pattern
@@ -14,7 +14,7 @@ regular paragraph.
 The quick brown fox jumped over the lazy
 dog's back.
 
-```
+```javascript
 // Each of the following options will create a new empty object:
  
 var newObject = {};
