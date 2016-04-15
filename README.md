@@ -204,4 +204,36 @@ var module = (function($){
 })(jQuery);
 ```
 
+Singletons
+----------
+
+Singletons are modules that point all instances to the same internal object
+
+```javascript
+var singleton = (function () {
+   var instance;
+  function init() {
+    var privateRandomNumber = Math.random();
+    return {
+      getRandomNumber: function() {
+        return privateRandomNumber;
+      }
+    };
+  };
+  return {
+    createInstance: function () {
+      if ( !instance ) {
+        instance = init();
+      }
+      return instance;
+    }
+  };
+})();
+
+var obj1 = singleton.createInstance();
+var obj2 = singleton.createInstance();
+
+console.log(obj1.getRandomNumber()) // logs a number
+console.log(obj2.getRandomNumber()) // logs the same number!
+```
 
