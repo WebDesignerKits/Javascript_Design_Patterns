@@ -5,7 +5,7 @@ Introduction to Javascript Design Patterns
 Object Creation
 ---------------------
 
-4 ways of creating objects in Javascript.
+3 ways of creating objects in Javascript.
 
 ```javascript
 // Each of the following options will create a new empty object:
@@ -151,4 +151,57 @@ var mondeo = new Car( "Ford Mondeo", 2010, 5000 );
 console.log( civic.toString() );
 console.log( mondeo.toString() );
 ```
+Object Literals
+---------------
+
+Back to the first example of how to create objects. 
+
+```javascript
+var obj = {
+    "example": "foo",
+    "example2": "foo2",
+    "example3": "foo3",
+    editExample: function(str){
+      this.example = str;
+    }
+};
+obj.editExample("moo") // logs "moo"
+```
+Module Pattern
+--------------
+
+Modules are self invoking functions, but that return an object
+
+A self invoking function
+
+```javascript
+(function(){
+ console.log("I called myself");
+})();
+```
+
+A self invoking function that returns an object, also known as a module
+
+```javascript
+var module = (function(){
+  var privateVar = "foo";
+  return {
+    var publicVar : "moo"
+  }
+})();
+console.log(module.privateVar) // undefined
+console.log(module.publicVar) // moo
+```
+
+When a module includes internal functions for editing its private variables, it's using the revealing module pattern.
+
+Importing variables into the self invoking function are called mixins
+
+```javascript
+var module = (function($){
+  $("body").html(); // We can use jQuery now!
+  return {}
+})(jQuery);
+```
+
 
