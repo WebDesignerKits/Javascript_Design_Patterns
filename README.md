@@ -236,4 +236,13 @@ var obj2 = singleton.createInstance();
 console.log(obj1.getRandomNumber()) // logs a number
 console.log(obj2.getRandomNumber()) // logs the same number!
 ```
+Observer
+--------
 
+The observer pattern refers to a series of objects updating when data changes in another object. The object that is changed is called the subject and the objects that update as a result of the change are called the observers.
+
+In javascript a couple classes are created that handle the observer subject relationships. 
+
+
+```javascript
+```
