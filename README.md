@@ -239,10 +239,109 @@ console.log(obj2.getRandomNumber()) // logs the same number!
 Observer
 --------
 
-The observer pattern refers to a series of objects updating when data changes in another object. The object that is changed is called the subject and the objects that update as a result of the change are called the observers.
+The observer pattern refers to a series of objects called observers that update when data changes in another object called the subject.
 
-In javascript a couple classes are created that handle the observer subject relationships. 
+In javascript a few classes are created that handle the observer subject relationships. 
 
+Here are the Observer classes:
+```javascript
+function ObserverList(){
+  this.observerList = [];
+}
+ 
+ObserverList.prototype.add = function( obj ){
+  return this.observerList.push( obj );
+};
+ 
+ObserverList.prototype.count = function(){
+  return this.observerList.length;
+};
+ 
+ObserverList.prototype.get = function( index ){
+  if( index > -1 && index < this.observerList.length ){
+    return this.observerList[ index ];
+  }
+};
+ 
+ObserverList.prototype.indexOf = function( obj, startIndex ){
+  var i = startIndex;
+ 
+  while( i < this.observerList.length ){
+    if( this.observerList[i] === obj ){
+      return i;
+    }
+    i++;
+  }
+ 
+  return -1;
+};
+ 
+ObserverList.prototype.removeAt = function( index ){
+  this.observerList.splice( index, 1 );
+};
+```
+Here are the subject classes:
+```javascript
+function Subject(){
+  this.observers = new ObserverList();
+}
+ 
+Subject.prototype.addObserver = function( observer ){
+  this.observers.add( observer );
+};
+ 
+Subject.prototype.removeObserver = function( observer ){
+  this.observers.removeAt( this.observers.indexOf( observer, 0 ) );
+};
+ 
+Subject.prototype.notify = function( context ){
+  var observerCount = this.observers.count();
+  for(var i=0; i < observerCount; i++){
+    this.observers.get(i).update( context );
+  }
+};
+```
+
+Publish Subscribe | Event Aggregation
+-----------------
+
+The publish/subscribe pattern builds on the observer pattern by using event handlers between the observers and subjects, thus avoiding dependencies between the observers and subject.
+
+Here several popular javascript libraries have their implementation of the publish subscribe pattern.
 
 ```javascript
+// Publish
+ 
+// jQuery: $(obj).trigger("channel", [arg1, arg2, arg3]);
+$( el ).trigger( "/login", [{username:"test", userData:"test"}] );
+ 
+// Dojo: dojo.publish("channel", [arg1, arg2, arg3] );
+dojo.publish( "/login", [{username:"test", userData:"test"}] );
+ 
+// YUI: el.publish("channel", [arg1, arg2, arg3]);
+el.publish( "/login", {username:"test", userData:"test"} );
+ 
+ 
+// Subscribe
+ 
+// jQuery: $(obj).on( "channel", [data], fn );
+$( el ).on( "/login", function( event ){...} );
+ 
+// Dojo: dojo.subscribe( "channel", fn);
+var handle = dojo.subscribe( "/login", function(data){..} );
+ 
+// YUI: el.on("channel", handler);
+el.on( "/login", function( data ){...} );
+ 
+ 
+// Unsubscribe
+ 
+// jQuery: $(obj).off( "channel" );
+$( el ).off( "/login" );
+ 
+// Dojo: dojo.unsubscribe( handle );
+dojo.unsubscribe( handle );
+ 
+// YUI: el.detach("channel");
+el.detach( "/login" );
 ```
