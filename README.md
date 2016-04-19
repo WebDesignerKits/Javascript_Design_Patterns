@@ -7,19 +7,19 @@ Now, in order to be current with web best practices, it's important to know how 
 
 The list of design patterns to use are:
 
-Constructor Pattern
-Module Pattern
-Revealing Module Pattern
-Singleton Pattern
-Observer Pattern
-Mediator Pattern
-Prototype Pattern
-Command Pattern
-Facade Pattern
-Factory Pattern
-Mixin Pattern
-Decorator Pattern
-Flyweight Pattern
+- Constructor Pattern
+- Module Pattern
+- Revealing Module Pattern
+- Singleton Pattern
+- Observer Pattern
+- Mediator Pattern
+- Prototype Pattern
+- Command Pattern
+- Facade Pattern
+- Factory Pattern
+- Mixin Pattern
+- Decorator Pattern
+- Flyweight Pattern
 
 Object Creation
 ---------------------
