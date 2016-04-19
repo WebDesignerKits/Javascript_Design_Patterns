@@ -1,6 +1,25 @@
 # Javascript Design Patterns
 Introduction to Javascript Design Patterns
 
+In the early days of the web, Javascript acted mainly as an API to access the DOM. But as the web grew and the power of the Javascript langauage was recognized, common design patterns were applied to Javascript. 
+
+Now, in order to be current with web best practices, it's important to know how to use Javascript in a way that is object oriented. 
+
+The list of design patterns to use are:
+
+Constructor Pattern
+Module Pattern
+Revealing Module Pattern
+Singleton Pattern
+Observer Pattern
+Mediator Pattern
+Prototype Pattern
+Command Pattern
+Facade Pattern
+Factory Pattern
+Mixin Pattern
+Decorator Pattern
+Flyweight Pattern
 
 Object Creation
 ---------------------
@@ -345,3 +364,76 @@ dojo.unsubscribe( handle );
 // YUI: el.detach("channel");
 el.detach( "/login" );
 ```
+Create your own pub/sub classes:
+```javascript
+var pubsub = {};
+ 
+(function(myObject) {
+ 
+    // Storage for topics that can be broadcast
+    // or listened to
+    var topics = {};
+ 
+    // An topic identifier
+    var subUid = -1;
+ 
+    // Publish or broadcast events of interest
+    // with a specific topic name and arguments
+    // such as the data to pass along
+    myObject.publish = function( topic, args ) {
+ 
+        if ( !topics[topic] ) {
+            return false;
+        }
+ 
+        var subscribers = topics[topic],
+            len = subscribers ? subscribers.length : 0;
+ 
+        while (len--) {
+            subscribers[len].func( topic, args );
+        }
+ 
+        return this;
+    };
+ 
+    // Subscribe to events of interest
+    // with a specific topic name and a
+    // callback function, to be executed
+    // when the topic/event is observed
+    myObject.subscribe = function( topic, func ) {
+ 
+        if (!topics[topic]) {
+            topics[topic] = [];
+        }
+ 
+        var token = ( ++subUid ).toString();
+        topics[topic].push({
+            token: token,
+            func: func
+        });
+        return token;
+    };
+ 
+    // Unsubscribe from a specific
+    // topic, based on a tokenized reference
+    // to the subscription
+    myObject.unsubscribe = function( token ) {
+        for ( var m in topics ) {
+            if ( topics[m] ) {
+                for ( var i = 0, j = topics[m].length; i < j; i++ ) {
+                    if ( topics[m][i].token === token ) {
+                        topics[m].splice( i, 1 );
+                        return token;
+                    }
+                }
+            }
+        }
+        return this;
+    };
+}( pubsub ));
+```
+
+Mediator
+--------
+
+When components refer to each other directly they are considered to be coupled, which is bad for scaling. Decoupling components allows for code reusability. This is often where a mediator comes in.
